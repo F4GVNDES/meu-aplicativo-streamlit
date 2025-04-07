@@ -47,11 +47,11 @@ def buscar_dados_cnpj(cnpj):
 
 # Configuração do WebDriver
 options = Options()
-options.add_argument("--headless=new")
-options.add_argument("--start-maximized")
-options.add_argument("--disable-blink-features=AutomationControlled")
-options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36")
-service = Service(ChromeDriverManager().install())
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
+service = Service('/usr/bin/chromedriver')
 driver = webdriver.Chrome(service=service, options=options)
 
 # Interface do Streamlit
