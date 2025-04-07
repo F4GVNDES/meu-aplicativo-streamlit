@@ -53,8 +53,8 @@ options.add_argument("--start-maximized")
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36")
 
-# Usa o Chromium e o chromium-driver instalados via packages.txt
-service = Service(executable_path="/usr/lib/chromium-browser/chromedriver")
+# Usa o chromium-driver instalado via packages.txt no caminho correto
+service = Service(executable_path="/usr/bin/chromedriver")
 driver = webdriver.Chrome(service=service, options=options)
 
 # Interface do Streamlit
