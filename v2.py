@@ -10,6 +10,7 @@ import pandas as pd
 import re
 import requests
 from datetime import datetime
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # Função para buscar dados do CNPJ via BrasilAPI
@@ -44,17 +45,13 @@ def buscar_dados_cnpj(cnpj):
 
     return "Não encontrado", "Não encontrado", "Não encontrado", "Não encontrado"
 
-# Configuração do WebDriver para Streamlit Cloud usando Chromium
+# Configuração do WebDriver
 options = Options()
-options.add_argument("--headless=new")  # Rodar sem interface gráfica
-options.add_argument("--no-sandbox")    # Necessário no ambiente Linux do Streamlit Cloud
-options.add_argument("--disable-dev-shm-usage")  # Evita problemas de memória em containers
+options.add_argument("--headless=new")
 options.add_argument("--start-maximized")
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36")
-
-# Usa o chromium-driver instalado via packages.txt no caminho correto
-service = Service(executable_path="/usr/bin/chromedriver")
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=options)
 
 # Interface do Streamlit
@@ -74,7 +71,7 @@ if st.button("Iniciar Coleta"):
 
     # Aguardar o carregamento do painel de resultados
     try:
-        painel_resultados = WebDriverWait(driver, 10).until(
+        painel_resultados = WebDriverWait(driver, 1).until(
             EC.presence_of_element_located((By.XPATH, '//div[@role="feed"]'))
         )
     except:
